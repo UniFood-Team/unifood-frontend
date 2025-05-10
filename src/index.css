@@ -20,6 +20,8 @@ body {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  background-color: white;
+  color: black;
  
 }
 

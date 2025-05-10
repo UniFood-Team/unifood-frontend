@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   position: relative; /* Adicionado */
+  flex-wrap: wrap;
 }
 
 .cadastrocontainer {
@@ -29,13 +30,12 @@
 }
 
 @media (max-width: 768px) {
+  
   .cadastrocontainer {
     flex-direction: column-reverse;
-    padding: 1rem;
-    margin-top: 0; /* Remove o deslocamento para telas menores */
   }
 
-  .illustrationbox img {
-    width: 100%;
+  .img_box img {
+    width: 50%;
   }
 }

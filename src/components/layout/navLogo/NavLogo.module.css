@@ -14,3 +14,13 @@
 .food{
     color: #d63432;
 }
+@media (max-width: 768px) {
+    .nav_logo {
+      position: static;
+      width: 100%;
+      text-align: center;
+      background-color: white;
+      padding-bottom: 0;
+    }
+  }
+  

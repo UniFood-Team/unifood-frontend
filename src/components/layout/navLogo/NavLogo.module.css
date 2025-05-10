@@ -1,0 +1,16 @@
+.nav_logo{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    background-color: white;
+    z-index: 10;
+}
+.LogoUnifood{
+    color: #000000;
+    font-weight: bold;
+    font-size: 2em;
+}
+.food{
+    color: #d63432;
+}

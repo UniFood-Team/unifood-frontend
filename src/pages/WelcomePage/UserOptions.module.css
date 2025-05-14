@@ -8,7 +8,8 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     cursor: pointer;
     transition: transform 0.2s ease;
-    width: 100px;
+    width: 5vw;
+    height: 4.5vw;
     border: 2px solid #ccc;
 }
 
@@ -17,14 +18,15 @@
 }
 
 .avatar {
-    width: 50px;
-    height: 50px;
+    width: 3vw;
+    height: 3vw;
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 0.5rem;
 }
 
 .avatarNome {
-    font-weight: 500;
+    font-weight: 600;
     color: #333;
+    font-size: 0.6vw;
 }

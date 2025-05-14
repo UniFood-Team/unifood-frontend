@@ -1,0 +1,26 @@
+.welcomecontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0 5vw;
+    gap: 6vw;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+
+.imagewrapper {
+    width: 32vw;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 6vh;
+}
+
+.imagewrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 1.2vw; /* proporcional ao tamanho da tela */
+}

@@ -1,0 +1,13 @@
+.header {
+    position: absolute;
+    top: 2vh;
+    right: 2vw;
+    z-index: 10; /* Garante que fique acima dos outros elementos */
+}
+
+.imagemlogo {
+    width: 7vw;
+    min-width: 121px;
+    margin-top: 5vh;
+    margin-right: 17vw;
+}

@@ -1,8 +1,8 @@
 import style from "./Submit.module.css"
-export default function Submit({text}){
+export default function Submit({text, customClass}){
     return(
         <div className={style.cont_submit}>
-            <button className={style.button_submit}>{text}</button>
+            <button className={`${style.button} ${customClass ? style[customClass] : ''}`}>{text}</button>
         </div>
     )
 }

@@ -6,18 +6,20 @@ import UserOptions from "../../form/userOptions/UserOptions";
 export default function BemVindo(){
     return(
         <div className={style.formbox}>
-            <h2>Olá,</h2>
-            <h2>Bem-vindo ao UniFood</h2>
-            <p>Continuar como</p>
+            <h2 className={style.bemvindoh2}>Olá,</h2>
+            <h2 className={style.bemvindoh2}>Bem-vindo ao UniFood</h2>
+            <p className={style.continuarcomo}>Continuar como</p>
             
             <div className={style.buttonGroup}>
                 <UserOptions
                     img={Icone}
                     label={"Cliente"}
+                    to={"/userCadastro"}
                 />
                 <UserOptions
                     img={Icone}
                     label={"Vendedor"}
+                    to={"/userCadastro"}
                 />
                 
             </div>

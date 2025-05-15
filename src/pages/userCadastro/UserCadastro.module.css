@@ -1,4 +1,4 @@
-.wrapper {
+.usercadastro {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -6,16 +6,17 @@
   position: relative; 
   flex-wrap: wrap;
 }
-
-.cadastrocontainer {
+/*formulario geral do cadastro*/
+.userform {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 2rem;
   min-height: 0;
- 
+
 }
 
+/*imagem cadastro*/
 .img_box{
   flex: 1;
   display: flex;
@@ -29,13 +30,12 @@
   object-fit: cover;
 }
 
+/*resposividade para telas menores*/
 @media (max-width: 768px) {
-  .wrapper{
-    height: 0;
-  }
-  .cadastrocontainer {
-    flex-direction: column-reverse;
-
+  
+  .userform {
+    flex-direction: column;
+    gap: 0;
   }
 
   .img_box img {

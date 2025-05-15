@@ -12,8 +12,17 @@
     border: 2px solid #ccc;
 }
 
+/* Ao passar o mouse*/
 .option:hover {
     transform: translateY(-4px);
+    background-color: #e0e0e0; 
+    border-color: #999;
+}
+
+/* Ao clicar */
+.option:active {
+    background-color: #d6d6d6; 
+    border-color: #888;
 }
 
 .avatar {

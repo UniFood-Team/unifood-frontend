@@ -1,0 +1,30 @@
+
+.input_container {
+    position: relative;
+    width: 100%;
+    
+}
+/* css é referente a label dos inputs*/
+.input_container label {
+    position: absolute;
+    top: -0.6rem;
+    left: 8px;
+    background-color: white;
+    padding: 0 0.25rem;
+    font-size: 0.85rem;
+    color: #797777;
+}
+/* Este css é referente ao nome, sobrenome, emial e telefone */
+.inputInfoBasicas, .inputSenha {
+    background-color: white;
+    color: black;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 1rem;
+    box-sizing: border-box; 
+}
+
+/* Este css é referente a senha e confirmação de senha*/
+

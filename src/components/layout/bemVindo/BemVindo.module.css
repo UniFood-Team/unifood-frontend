@@ -1,4 +1,4 @@
-.formbox {
+.formbox{
   background: white;
   padding: 55px;
   width: 330px;
@@ -9,13 +9,15 @@
   
 }
 
-h2 {
+.bemvindoh2{
   margin-top: 0;
 }
 
-p {
+.continuarcomo {
   margin-bottom: 20px;
   margin-top: 60px;
+  color: #7e7a7a;
+ 
 }
 
 .buttonGroup {
@@ -35,12 +37,12 @@ p {
     max-width: 300px;
   
   }
-  h2 {
+  .bemvindoh2{
     margin-top: 0;
     font-size: 15px;
   }
   
-  p {
+  .continuarcomo{
     margin-bottom: 5px;
     margin-top: 15px;
     font-size: 10px;

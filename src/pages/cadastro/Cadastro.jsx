@@ -8,12 +8,12 @@ function Cadastro(){
     return(
         <div className={style.wrapper}>
             <NavLogo />
-            <div className={style.cadastrocontainer}>
+            <section className={style.cadastrocontainer}>
                 <BemVindo />
                 <div className={style.img_box}>
-                    <img src={ilustracao} alt="Ilustração de pedido" />
+                    <img src={ilustracao} alt="Ilustração de cadastro" />
                 </div>
-            </div>
+            </section>
         </div>
     )
 }

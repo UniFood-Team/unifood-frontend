@@ -1,13 +1,25 @@
 import './App.css'
 import AppRoutes from './routes/AppRoutes'
+
+import 'primereact/resources/themes/saga-blue/theme.css';
+
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
+
+
+
+import { PrimeReactProvider } from 'primereact/api';
 function App() {
   return (
-    <div>
+    <PrimeReactProvider>
       <AppRoutes />
-    </div>
+    </PrimeReactProvider>
+    
 
    
   )
 }
 
 export default App
+ 

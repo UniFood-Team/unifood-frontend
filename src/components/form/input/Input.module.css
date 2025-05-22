@@ -1,7 +1,7 @@
 
 .input_container {
     position: relative;
-    width: 100%;
+   
     
 }
 /* css é referente a label dos inputs*/
@@ -11,8 +11,8 @@
     left: 8px;
     background-color: white;
     padding: 0 0.25rem;
-    font-size: 0.85rem;
-    color: #797777;
+    font-size: 0.80rem;
+    color: black;
 }
 /* Este css é referente ao nome, sobrenome, emial e telefone */
 .inputInfoBasicas, .inputSenha {
@@ -20,11 +20,17 @@
     color: black;
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     border-radius: 3px;
-    font-size: 1rem;
+    font-size: 0.8rem;
     box-sizing: border-box; 
 }
 
-/* Este css é referente a senha e confirmação de senha*/
-
+.inputInfoBasicas:-webkit-autofill,
+.inputInfoBasicas:-webkit-autofill:hover, 
+.inputInfoBasicas:-webkit-autofill:focus,
+.inputInfoBasicas:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}

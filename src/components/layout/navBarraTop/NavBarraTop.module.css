@@ -1,0 +1,151 @@
+.topbarra{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: #f7f8fa;
+}
+
+.searchContainer{
+  flex: 1;
+  
+}
+.spanSearch {
+  position: relative; /* necessário para posicionar o ícone dentro */
+  width: fit-content; /* ou 100%, depende do contexto */
+}
+
+.searchInput {
+  width: 600px;
+  background-color: white;
+  border: 1px solid #dbd7d7;
+  color: #000;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  padding: 0.8rem;
+  padding-right: 2.5rem; /* espaço para o ícone */
+  border-radius: 5px;
+}
+
+.searchInput::placeholder {
+  color: #c5c0c0;
+  opacity: 1; 
+}
+
+.inputIcon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none; /* evita interferência no clique */
+}
+
+
+.rightIcons{
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.icon{
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #6c757d;
+}
+
+.icon:hover{
+  color: #d3b0bc;
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: 1rem;
+}
+
+.greeting {
+  font-weight: 500;
+  color: #333;
+}
+
+.iconGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-right: 1.5rem;
+}
+
+.iconBox {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  font-size: 1.2rem;
+  color: #007afd;
+}
+.iconPresent{
+  font-size: 1.1rem;
+  color: #191919;
+}
+
+.iconSetting{
+  font-size: 1.2rem;
+  color: #d86a6a;
+}
+.iconPresent:hover{
+  color: #d3b0bc;
+}
+.iconSetting:hover{
+  color: #d3b0bc;
+}
+/* cores de fundo */
+.lightBlue {
+  background-color: #e1f0ff;
+}
+
+.gray {
+  background-color: #e8e9f1;
+}
+
+.pink {
+  background-color: #ffe4e8;
+}
+
+/* badge */
+.badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #2196f3;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 3px 6px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* cores individuais dos badges */
+.iconBox:nth-child(1) .badge {
+  background-color: #2196f3;
+}
+
+.iconBox:nth-child(2) .badge {
+  background-color: #2196f3;
+}
+
+.iconBox:nth-child(3) .badge {
+  background-color: #4a4e69;
+}
+
+.iconBox:nth-child(4) .badge {
+  background-color: #f44336;
+}
+

@@ -1,20 +1,31 @@
-import style from "./Cadastro.module.css";
+import style from "./UserBemVindo.module.css";
 
-import BemVindo from "../../components/layout/bemVindo/BemVindo"
+
+import CardBemVindo from "../../features/cardBemVindo/CardBemVindo"
 import ilustracao from "../../assets/image/cadastro.svg";
 import NavLogo from "../../components/layout/navLogo/NavLogo";
+   
+
+
+
+
+
 
 function Cadastro(){
     return(
+
         <div className={style.wrapper}>
             <NavLogo />
             <section className={style.cadastrocontainer}>
-                <BemVindo />
+                <CardBemVindo />
                 <div className={style.img_box}>
                     <img src={ilustracao} alt="Ilustração de cadastro" />
                 </div>
+                
             </section>
         </div>
+
+        
     )
 }
 

@@ -15,7 +15,9 @@
   min-height: 0;
 
 }
-
+.userform ::placeholder{
+  color: #666;
+}
 /*imagem cadastro*/
 .img_box{
   flex: 1;

@@ -1,0 +1,53 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  background-color: #f7f8fa;
+  font-family: 'Inter', sans-serif;
+}
+
+.mainContent {
+  flex-grow: 1;
+  padding: 2rem;
+}
+
+.pageTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+.submit{
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+.contprodutos{
+  padding: 1rem 1.5rem;
+}
+
+.botaoCustomizado {
+  background-color: #f0716f; 
+  color: white;
+  border: none;
+}
+
+.botaoCustomizado:hover {
+  background-color: #e0a5a4;
+}
+
+.table {
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+}
+
+.dataTable th {
+  background-color: #f0716f; /* Cabeçalho azul escuro */
+  color: white;
+}
+
+.dataTable td {
+  background-color: #f9f9f9;
+  color: black;
+}

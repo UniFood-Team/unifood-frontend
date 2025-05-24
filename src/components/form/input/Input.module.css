@@ -1,8 +1,7 @@
 
 .input_container {
     position: relative;
-   
-    
+    width: 100%;
 }
 /* css é referente a label dos inputs*/
 .input_container label {
@@ -30,7 +29,7 @@
 .inputInfoBasicas:-webkit-autofill:hover, 
 .inputInfoBasicas:-webkit-autofill:focus,
 .inputInfoBasicas:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
-  -webkit-text-fill-color: #000 !important;
-  transition: background-color 5000s ease-in-out 0s;
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    -webkit-text-fill-color: #000 !important;
+    transition: background-color 5000s ease-in-out 0s;
 }

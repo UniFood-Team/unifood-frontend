@@ -20,7 +20,7 @@ export default function Signup({txtBtn}){
     const [dados, setDados] = useState({nome:'', sobrenome:'', email:'', telefone:'', senha:'', confirmacaoSenha:'',nomeEstabelecimento: '',contato:'', aceitarTermos:'', formaPagamento: ''})
     //const navigate = useNavigate();
 
-     /* manipulador genérico de mudanças de inputo*/
+    /* manipulador genérico de mudanças de inputo*/
     function handleChange(e){
         const {name, value, type, checked} = e.target;
         setDados({

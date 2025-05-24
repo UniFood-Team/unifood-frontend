@@ -19,7 +19,7 @@ export default function BemVindo(){
                 <UserOptions
                     img={Icone}
                     label={"Vendedor"}
-                    to={"/meusProdutos"}
+                    to={"/vendedorCadastro"}
                 />
                 
             </div>

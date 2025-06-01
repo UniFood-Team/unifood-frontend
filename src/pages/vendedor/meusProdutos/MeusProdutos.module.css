@@ -2,7 +2,7 @@
   display: flex;
   height: 100vh;
   background-color: #f7f8fa;
-  font-family: 'Inter', sans-serif;
+  
 }
 
 .mainContent {
@@ -33,21 +33,40 @@
 }
 
 .botaoCustomizado:hover {
-  background-color: #e0a5a4;
+  background-color: #c887869c;
+
 }
 
-.table {
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-}
 
-.dataTable th {
-  background-color: #f0716f; /* Cabeçalho azul escuro */
-  color: white;
-}
+/* ---------------------------
+   Responsividade para telas menores
+---------------------------- */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
 
-.dataTable td {
-  background-color: #f9f9f9;
-  color: black;
+  .mainContent {
+    padding: 1rem;
+  }
+
+  .submit {
+    align-items: flex-start;
+    padding: 0;
+    margin-bottom: 0.5em;
+  }
+
+  .titulo {
+    margin: 0;
+  }
+
+  .contprodutos {
+    padding: 0.5rem 0;
+  }
+
+  .botaoCustomizado {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+  }
 }

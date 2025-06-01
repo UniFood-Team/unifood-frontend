@@ -33,14 +33,69 @@
 }
 
 .menuItem:hover {
-  background-color: #f8f9fa;
+  background-color: #dbc8c89c;
 }
-
 .active {
   color: #f0716f;
   background-color: #ffe5ec;
 }
-
 .icon {
   font-size: 1.4rem;
+}
+/* Oculta os textos inicialmente em mobile */
+.menuItem span {
+  display: inline;
+}
+
+/* Tooltip apenas quando texto oculto */
+.menuItem span::after {
+  content: attr(data-label);
+  display: none;
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 0.75rem;
+}
+
+/* ---------------------
+    RESPONSIVO - TELAS PEQUENAS
+---------------------- */
+@media (max-width: 768px) {
+  .navbarraside {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    padding: 0.5rem 1rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+  }
+
+  .iconeBarra {
+    display: none;
+  }
+
+  .menuItem {
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.25rem;
+  }
+
+  .menuItem span {
+    display: none;
+  }
+
+  .menuItem:hover span::after {
+    display: block;
+  }
 }

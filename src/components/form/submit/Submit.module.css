@@ -3,11 +3,11 @@
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin-top: 1em;
+    width: 100%;
 }
 
 /*botão de criar conta*/
-.btnCriaConta {
+.btnCriaConta, .btnLogin {
     width: 100%;
     padding: 0.75rem;
     background-color: #f0716f;
@@ -19,6 +19,7 @@
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 
 
 /* Usado no botão de cadastro (não usado diretamente no JSX atual) */

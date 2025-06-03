@@ -1,41 +1,102 @@
 import styles from './MeusProdutos.module.css';
-import NavBarraSide from '../../../components/layout//navBarraSide/NavBarraSide';
-import NavBarraTop from '../../../components/layout/navBarraTop/NavBarraTop';   
+import NavBarraSide from '../../../components/layout/navBarraSide/NavBarraSide';
+import NavBarraTop from '../../../components/layout/navBarraTop/NavBarraTop';
 import { Button } from 'primereact/button';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
 
 import { useState } from 'react';
+import CadastroProduto from '../../../components/form/cadastroProduto/CadProduto';
+import CardViewProduct from '../../../features/cardViewProduct/CardViewProduct';
 
 export default function MeusProdutos() {
   const [showForm, setShowForm] = useState(false); // controla visibilidade do modal
-  
-  const salvarProduto = (produto) => {
-    console.log('Produto salvo:', produto);
+
+  //TESTE: Estado de produtos com os dados iniciais
+  const [produtos, setProdutos] = useState([
+    {
+      id: 1,
+      nome: 'Camiseta Básica',
+      descricao: 'Camiseta de algodão 100% orgânico, disponível em várias cores.',
+      preco: 49.9,
+      ultimaAtualizacao: '25/05/2025 14:32',
+    },
+    {
+      id: 2,
+      nome: 'Tênis Esportivo',
+      descricao: 'Tênis leve e confortável para corrida ou uso diário.',
+      preco: 19.99,
+      ultimaAtualizacao: '22/05/2025 09:10',
+    },
+    {
+      id: 3,
+      nome: 'Mochila Executiva',
+      descricao: 'Mochila com compartimento para notebook e resistência à água.',
+      preco: 59.75,
+      ultimaAtualizacao: '20/05/2025 18:47',
+    },
+    {
+      id: 4,
+      nome: 'Tênis Esportivo',
+      descricao: 'Tênis leve e confortável para corrida ou uso diário.',
+      preco: 19.99,
+      ultimaAtualizacao: '22/05/2025 09:10',
+    },
+    {
+      id: 5,
+      nome: 'Mochila Executiva',
+      descricao: 'Mochila com compartimento para notebook e resistência à água.',
+      preco: 59.75,
+      ultimaAtualizacao: '20/05/2025 18:47',
+    },
+    {
+      id: 6,
+      nome: 'Tênis Esportivo',
+      descricao: 'Tênis leve e confortável para corrida ou uso diário.',
+      preco: 19.99,
+      ultimaAtualizacao: '22/05/2025 09:10',
+    },
+    {
+      id: 7,
+      nome: 'Mochila Executiva',
+      descricao: 'Mochila com compartimento para notebook e resistência à água.',
+      preco: 59.75,
+      ultimaAtualizacao: '20/05/2025 18:47',
+    },
+  ]);
+
+  // Adiciona novo produto à lista
+  const salvarProduto = (novoProduto) => {
+    const produtoComData = {
+      ...novoProduto,
+      id: produtos.length + 1,
+      ultimaAtualizacao: new Date().toLocaleString('pt-BR'),
+    };
+
+    setProdutos([...produtos, produtoComData]);
   };
 
   return (
     <div className={styles.layout}>
-      <NavBarraSide/>
+      <NavBarraSide />
       <div className={styles.mainContent}>
-        <NavBarraTop/>
+        <NavBarraTop />
         <div className={styles.contprodutos}>
           <div className={styles.submit}>
-            <h2>Meus Produtos</h2>
-            <Button label="Criar Produto" icon="pi pi-plus-circle" className={styles.botaoCustomizado}/>
+            <h2 className={styles.titulo}>Meus Produtos</h2>
+            <Button 
+              label="Criar Produto" 
+              icon="pi pi-plus-circle" 
+              className={styles.botaoCustomizado}
+              onClick={() => setShowForm(true)}
+            />
           </div>
-          <div className={styles.table}>
-            <DataTable className={styles.dataTable}>
-              <Column field="Nome do Produto" header="Code"></Column>
-              <Column field="Descrição" header="Descrição"></Column>
-              <Column field="Preço" header="Preço"></Column>
-              <Column field="Última atualização" header="Última atualização"></Column>
-              <Column field="Ações" header="Ações"></Column>
-            </DataTable>
-          </div>
+
+          {/* Usa o estado real para mostrar produtos */}
+          <CardViewProduct produtos={produtos} />
         </div>
       </div>
-      <FormCadProduto
+
+      {/* Modal de cadastro de produto */}
+      <CadastroProduto
         visible={showForm}
         onHide={() => setShowForm(false)}
         onSave={salvarProduto}

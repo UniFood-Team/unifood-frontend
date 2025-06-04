@@ -1,7 +1,7 @@
 
 .input_container {
     position: relative;
-    width: 100%;
+
 }
 /* css é referente a label dos inputs*/
 .input_container label {
@@ -19,17 +19,45 @@
     color: black;
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #000000;
+    border: 1px solid #79747E;
     border-radius: 3px;
     font-size: 0.8rem;
     box-sizing: border-box; 
 }
 
+
 .inputInfoBasicas:-webkit-autofill,
-.inputInfoBasicas:-webkit-autofill:hover, 
+.inputSenha:-webkit-autofill,
+.inputSenha:-webkit-autofill:hover, 
+.inputSenha:-webkit-autofill:focus,
+.inputSenha:-webkit-autofill:active,
+.inputInfoBasicas:-webkit-autofill:hover,
 .inputInfoBasicas:-webkit-autofill:focus,
 .inputInfoBasicas:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0px 1000px white inset !important;
-    -webkit-text-fill-color: #000 !important;
     transition: background-color 5000s ease-in-out 0s;
+}
+
+
+@media (max-width: 768px) {
+    .inputInfoBasicas, .inputSenha {
+        padding: 0.45rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .input_container label {
+        font-size: 0.65rem;
+    }
+    .inputInfoBasicas:-webkit-autofill,
+    .inputSenha:-webkit-autofill,
+    .inputSenha:-webkit-autofill:hover, 
+    .inputSenha:-webkit-autofill:focus,
+    .inputSenha:-webkit-autofill:active,
+    .inputInfoBasicas:-webkit-autofill:hover,
+    .inputInfoBasicas:-webkit-autofill:focus,
+    .inputInfoBasicas:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+   
 }

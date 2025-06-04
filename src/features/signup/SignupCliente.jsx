@@ -198,7 +198,7 @@ export default function Signup({txtBtn}){
                     name="aceitarTermos"
                     checked={dados.aceitarTermos}
                     handleOnChange={handleChange}
-                    customClass={style.checkedinput}
+                    customClass="checkedinput"
                 />
                 <label>Eu concordo com todos os <a href="#" className={style.termo}>Termos</a> e <a href="#"  className={style.termo}>Políticas de Privacidade</a></label>
             </div>
@@ -211,6 +211,7 @@ export default function Signup({txtBtn}){
 
             <div className={style.googleLogin}>
                 <GoogleLogin
+                style={{width:'100%'}}
                     className={style.googlecomponent}
                     onSuccess={credentialResponse => {
                         const tokenId = credentialResponse.credential;

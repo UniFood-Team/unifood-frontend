@@ -11,7 +11,7 @@
 
 /* Usado no título "Cadastre-se" */
 .titulo {
-    
+    font-size: 2rem;
     margin-bottom: 0.5rem;
     margin-top: 1rem;
 }
@@ -61,8 +61,7 @@
     width: 100%;
     z-index: 1;
     position: relative;
-    border: 1px solid #000000;
-    
+    border: 1px solid #79747E;
 }
 
 /* Usado para o label "Preferência de pagamento" */
@@ -132,16 +131,89 @@
 
 /* Estilos responsivos para telas menores */
 @media (max-width: 768px) {
-    /* Responsivo para o formulário principal */
     .formCadastro {
-        margin: 0 auto;
+       height: auto;
+        padding: 1rem;
+        height:auto;
         padding-top: 0;
     }
 
-    /* Reduz a largura das linhas da divider */
-    .divider::before,
-    .divider::after {
-        top: 50%;
-        width: 30%;
+    .titulo {
+        font-size: 1.5rem;
+        margin-top: auto;
+        margin-bottom: auto;
+        
     }
+
+    .subtitulo{
+        font-size: 10px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+    .subtituloAcesso {
+        font-size: 12px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+
+    .formRow {
+        gap: 0.5rem;
+        margin-top: 0.80rem;
+    }
+
+    .formGroupPassword {
+        margin-top: 0.80rem;
+    }
+
+    .selectItem {
+        margin-top: 0.65rem;
+    }
+
+    .dropdown {
+        font-size: 0.85rem;
+        padding: 0.25rem;
+    }
+
+    .labelPagamento {
+        font-size: 0.65rem;
+        top: -0.5rem;
+        left: 6px;
+        padding: 0 0.2rem;
+    }
+
+    .vizuSenha {
+        font-size: 1rem;
+        right: 0.5rem;
+    }
+
+    .checkboxContainer {
+        font-size: 0.75rem;
+        gap: 0.4rem;
+        margin-top: 0.60rem;
+    }
+   
+    
+    .loginLink {
+        font-size: 0.8rem;
+        margin-top: 0.60rem;
+        margin-bottom: auto;
+    }
+
+   
+    .inputInfoBasicas, .inputSenha{
+        padding: 0.3rem 0.45rem;
+        font-size: 0.7rem;
+       
+    }
+    .dropdown{
+        height: 29px;
+    }
+    .p-dropdown-items-wrapper {
+        background-color: #a66363;
+    }
+    .p-dropdown-item:hover {
+        background-color: #ddd;
+    }
+     /*.p-dropdown .p-dropdown-label estilizada globalmente em cadProduto */
+
 }

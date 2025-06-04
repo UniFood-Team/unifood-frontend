@@ -227,12 +227,12 @@ export default function Signup({txtBtn}){
             </div>
 
             <div className={style.selectItem}>
-                <label htmlFor="pag" className={style.labelPagamento}>Preferência de pagamento</label>
+                <label  className={style.labelPagamento}>Preferência de pagamento</label>
                 <Dropdown 
                     value={dados.formaPagamento}
                     onChange={(e) => setDados({...dados, formaPagamento: e.value})}
                     options={items} 
-                    virtualScrollerOptions={{ itemSize: 38 }}
+                    virtualScrollerOptions={{ itemSize: 30 }}
                     className={style.dropdown}
                 />
             </div>
@@ -243,10 +243,10 @@ export default function Signup({txtBtn}){
                     type="checkbox"
                     name="aceitarTermos"
                     checked={dados.aceitarTermos}
-                   handleOnChange={handleChange}
-                    customClass={style.checkedinput}
+                    handleOnChange={handleChange}
+                    style={{height:'10px'}}
                 />
-                <label>Eu concordo com todos os <a href="#" className={style.termo}>Termos
+                <label className={style.concordoTermo}>Eu concordo com todos os <a href="#" className={style.termo}>Termos
                 </a> e <a href="#"  className={style.termo}>Políticas de Privacidade</a></label>
             </div>
             

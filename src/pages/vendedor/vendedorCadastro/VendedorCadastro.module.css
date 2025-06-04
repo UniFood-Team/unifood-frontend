@@ -38,11 +38,11 @@
 @media (max-width: 768px) {
   
   .userform {
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 0;
   }
 
   .img_box img {
-    width: 50%;
+    width: 40%;
   }
 }

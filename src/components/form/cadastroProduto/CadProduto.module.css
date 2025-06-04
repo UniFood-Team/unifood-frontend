@@ -91,7 +91,7 @@
 .nome input,
 .preco input,
 .descricao textarea,
-:global(.p-dropdown){
+.p-dropdown{
     width: 100%;
     box-sizing: border-box;
     height: 42px;
@@ -195,12 +195,11 @@
   }
   
 
-  input,
-  textarea,
+
   .nome input,
   .preco input,
   .descricao textarea,
-  :global( .p-dropdown) {
+  .p-dropdown{
     font-size: 12px;             /* fonte menor */
     height: 36px !important;     /* menos altura */
   }
@@ -254,9 +253,27 @@
   .botoes {
     gap: 0.5rem;
   }
-  
+  /*css global para todos os componentes*/
   :global(.p-dropdown .p-dropdown-label) {
     font-size: 12px !important;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+  }
+  :global(.p-dropdown-items-wrapper ){
+    background-color: #e7bebe15;
+    height: 125px !important;
+  }
+  :global(.p-dropdown-items ){
+    padding: 0;
+  }
+  :global(.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight):hover{
+    background-color: #dcaead;
+  }
+  :global(.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus) {
+    background-color: #f0716f5d;
+   
+    font-weight: bold;
   }
   :global(.p-fileupload-choose > span) {
     font-size: 12px !important;
@@ -264,4 +281,5 @@
   :global(.p-fileupload-choose){
     height: 30px;
   }
+
 }

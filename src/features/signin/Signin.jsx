@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import style from "./Signin.module.css"
 
@@ -7,7 +8,6 @@ import Submit from "../../components/form/submit/Submit"
 
 import { GoogleLogin } from '@react-oauth/google';
 
-
 /*icone de mostrar senha*/
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -15,8 +15,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function Signin({txtBtn}){
 
-    const [dados, setDados] = useState({ email:'', senha:'', lembreDeMim:'' })
-
+    const [dados, setDados] = useState({ email:'', senha:'', lembreDeMim:false })
+    const navigate = useNavigate();
     //mudança de estado dos objetos
     function handleChange(e){
         const {name, value, type, checked} = e.target;
@@ -26,6 +26,9 @@ export default function Signin({txtBtn}){
         });
     }
 
+    const irParaBemvindo = () => {
+        navigate('/');
+    };
 
     const [senha, setSenha] = useState(false);
 
@@ -39,6 +42,9 @@ export default function Signin({txtBtn}){
 
         if (!emailRegex.test(dados.email)) {
             return "Por favor, insira um email válido.";
+        }
+        if (dados.senha.length < 6) {
+            return "A senha deve ter pelo menos 6 caracteres.";
         }
 
         return null;
@@ -169,6 +175,7 @@ export default function Signin({txtBtn}){
                         id="lembreDeMim" 
                         checked={dados.lembreDeMim} 
                         handleOnChange={handleChange}
+                        customClass="checkboxLogin"
                     />
 
                     <label className={style.lembrar}>Lembrar de mim</label>
@@ -181,7 +188,9 @@ export default function Signin({txtBtn}){
 
             
             <Submit text={txtBtn} customClass="btnLogin"/>
-            <p className={style.cadastrarLogin}>Sem conta? <a href="#">Criar uma conta</a></p>
+            <p className={style.cadastrarLogin}>Sem conta?
+                 <span onClick={irParaBemvindo} className={style.cadastroConta}> Criar uma conta</span>
+            </p>
 
             
         </form>

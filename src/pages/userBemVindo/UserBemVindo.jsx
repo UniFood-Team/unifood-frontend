@@ -11,7 +11,8 @@ import NavLogo from "../../components/layout/navLogo/NavLogo";
 
 
 
-function Cadastro(){
+
+export default function UserBemVindo(){
     return(
 
         <div className={style.wrapper}>
@@ -28,5 +29,3 @@ function Cadastro(){
         
     )
 }
-
-export default Cadastro

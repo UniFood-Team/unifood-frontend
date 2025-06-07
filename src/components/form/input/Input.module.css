@@ -25,6 +25,7 @@
     box-sizing: border-box; 
 }
 
+
 /*css dos campos email e senha do login*/
 .loginEmail, .loginSenha{
     background-color: #efefef;

@@ -12,7 +12,7 @@
 /* Usado no título "Cadastre-se" */
 .titulo {
     font-size: 2rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.7rem;
     margin-top: 1rem;
 }
 
@@ -25,7 +25,6 @@
 }
 .subtituloAcesso {
     margin-top: 1rem;
-    
 }
 /* Usado nos blocos que agrupam dois inputs lado a lado */
 .formRow {
@@ -120,10 +119,12 @@
 }
 
 /* Usado nos links dentro do loginLink */
-.loginLink a {
+.loginClick {
     color: #f0716f;
-    text-decoration: none;
     font-weight: 500;
+    margin-left: 5px;
+    cursor: pointer;
+    font: bold;
 }
 
 
@@ -132,7 +133,7 @@
 /* Estilos responsivos para telas menores */
 @media (max-width: 768px) {
     .formCadastro {
-       height: auto;
+        height: auto;
         padding: 1rem;
         height:auto;
         padding-top: 0;
@@ -142,6 +143,7 @@
         font-size: 1.5rem;
         margin-top: auto;
         margin-bottom: auto;
+        height: 26px;
         
     }
 
@@ -190,6 +192,10 @@
         font-size: 0.75rem;
         gap: 0.4rem;
         margin-top: 0.60rem;
+    }
+    .checkboxContainer .concordoTermo{
+        font-size: 0.70rem;
+        line-height: 1.8;
     }
    
     

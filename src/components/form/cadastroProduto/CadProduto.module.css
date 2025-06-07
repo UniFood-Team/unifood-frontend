@@ -177,6 +177,26 @@
   color: #9ca3af;
   cursor: not-allowed;
 }
+:global(.p-dropdown-items-wrapper ){
+  background-color: #e7bebe15;
+  height: 125px !important;
+}
+
+:global(.p-dropdown-items ){
+  padding: 0;
+}
+:global(.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight){
+  background-color: #dac3c38f;
+}
+:global(.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus) {
+  background-color: #f0716f5d;
+  font-weight: bold;
+}
+:global(.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled).p-focus  ) {
+  background-color: #f0716f5d;
+  font-weight: bold;
+}
+
 /* Responsividade para telas menores */
 @media (max-width: 768px) {
   :global(body .p-dialog) {
@@ -267,14 +287,7 @@
   :global(.p-dropdown-items ){
     padding: 0;
   }
-  :global(.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight):hover{
-    background-color: #dcaead;
-  }
-  :global(.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus) {
-    background-color: #f0716f5d;
-   
-    font-weight: bold;
-  }
+
   :global(.p-fileupload-choose > span) {
     font-size: 12px !important;
   }

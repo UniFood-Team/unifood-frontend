@@ -35,7 +35,8 @@
   }
   .cadastrocontainer {
     flex-direction: column-reverse;
-
+    padding: 2rem;
+    gap: 10px;
   }
 
   .img_box img {

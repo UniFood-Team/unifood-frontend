@@ -13,7 +13,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 
-export default function Signup({txtBtn}){
+export default function Signin({txtBtn}){
 
     const [dados, setDados] = useState({ email:'', senha:'', lembreDeMim:'' })
 
@@ -33,7 +33,7 @@ export default function Signup({txtBtn}){
     function validarFormulario(dados) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (Object.entries(dados).some((val) => !val)) {
+        if (Object.values(dados).some(v => v === '' || v === false)) {
             return "Por favor, preencha todos os campos obrigatórios.";
         }
 
@@ -75,6 +75,9 @@ export default function Signup({txtBtn}){
         .then(data =>{
             console.log("Cadastro realizado com sucesso:", data);
             // Redirecionar ou exibir mensagem de sucesso
+            localStorage.setItem("token", data.token);
+            window.location.href = "/dashboard";
+            
         })
         .catch(error =>{
             console.error("Erro no envio:", error);
@@ -124,26 +127,28 @@ export default function Signup({txtBtn}){
 
             <div className={style.divider}>Ou</div>
 
-            <Input
+            <div className={style.emailContainer}>
+                <label className={style.labelSenhaEmail}>Email</label>
+                <Input
                 type="email"
-                text="Email"
                 name="email"
                 placeholder="Digite seu email"
                 handleOnChange={handleChange}
                 value={dados.email}
-                customClass="inputInfoBasicas"
+                customClass="loginEmail"
             />
+            </div>
 
             {/* senha*/}
             <div className={style.passwordWrapper}>
+                <label className={style.labelSenhaEmail}>Senha</label>
                 <Input
                     type={senha ? 'text' : 'password'}
-                    text="Senha"
                     name="senha"
                     placeholder="Digite sua senha"
                     handleOnChange={handleChange}
                     value={dados.senha}
-                    customClass="inputSenha"
+                    customClass="loginSenha"
                     
                 />
                 {/* Vizualizar senha*/}
@@ -156,20 +161,27 @@ export default function Signup({txtBtn}){
                 </span>
             </div>
     
-            <div className={style.formRow}>
+            <div className={style.senhaMain}>
                 <div className={style.checkboxContainer}>
-                    <input type="checkbox" name="" id="" />
-                    <label>Lembrar de mim</label>
+                    <Input 
+                        type="checkbox" 
+                        name="lembreDeMim" 
+                        id="lembreDeMim" 
+                        checked={dados.lembreDeMim} 
+                        handleOnChange={handleChange}
+                    />
+
+                    <label className={style.lembrar}>Lembrar de mim</label>
                 </div>
 
-                <p className={style.loginLink}>
-                    <a href="#">Esqueci a senha!</a>
+                <p className={style.esqueceuSenha}>
+                    <a href="#">Esqueceu a senha?</a>
                 </p>
             </div>
 
             
             <Submit text={txtBtn} customClass="btnLogin"/>
-            <p className={style.loginLink}>Sem conta? <a href="#">Criar uma conta</a></p>
+            <p className={style.cadastrarLogin}>Sem conta? <a href="#">Criar uma conta</a></p>
 
             
         </form>

@@ -36,10 +36,14 @@
 
 /*resposividade para telas menores*/
 @media (max-width: 768px) {
+  .usercadastro{
+    height: auto;
+  }
   
   .userform {
     flex-direction: column-reverse;
     gap: 0;
+    width: 100%;
   }
 
   .img_box img {

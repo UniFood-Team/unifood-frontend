@@ -12,13 +12,13 @@ import { Dropdown } from 'primereact/dropdown';
 /*icone de mostrar senha*/
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Signup({txtBtn}){
 
     const [dados, setDados] = useState({nome:'', sobrenome:'', email:'', telefone:'', senha:'', confirmacaoSenha:'',nomeEstabelecimento: '',contato:'', aceitarTermos:'', formaPagamento: ''})
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
 
     /* manipulador genérico de mudanças de inputo*/
     function handleChange(e){
@@ -28,6 +28,10 @@ export default function Signup({txtBtn}){
             [name]: type === 'checkbox' ? checked : value
         });
     }
+
+    const irParaLogin = () => {
+        navigate('/login');
+    };
 
     const [senha, setSenha] = useState(false);
     const [confirmSenha, setConfirmSenha] = useState(false);
@@ -244,7 +248,7 @@ export default function Signup({txtBtn}){
                     name="aceitarTermos"
                     checked={dados.aceitarTermos}
                     handleOnChange={handleChange}
-                    style={{height:'10px'}}
+                    customClass ="checkboxVendedor"
                 />
                 <label className={style.concordoTermo}>Eu concordo com todos os <a href="#" className={style.termo}>Termos
                 </a> e <a href="#"  className={style.termo}>Políticas de Privacidade</a></label>
@@ -253,7 +257,11 @@ export default function Signup({txtBtn}){
             
             <Submit text={txtBtn} customClass="btnCriaConta" />
 
-            <p className={style.loginLink}>Já possui uma conta? <a href="#">Login</a></p>
+            <p className={style.loginLink}>Já possui uma conta? 
+                <span onClick={irParaLogin} className={style.loginClick}>
+                    Login   
+                </span>
+            </p>
 
         </form>
     )

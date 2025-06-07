@@ -11,12 +11,12 @@ import { GoogleLogin } from '@react-oauth/google';
 /*icone de mostrar senha*/
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Signup({txtBtn}){
 
     const [dados, setDados] = useState({nome:'', sobrenome:'', email:'', telefone:'', senha:'', confirmacaoSenha:'', aceitarTermos:'' })
-
+    const navigate = useNavigate();
     //mudança de estado dos objetos
     function handleChange(e){
         const {name, value, type, checked} = e.target;
@@ -25,6 +25,9 @@ export default function Signup({txtBtn}){
             [name]: type === 'checkbox' ? checked : value
         });
     }
+    const irParaLogin = () => {
+        navigate('/login');
+    };
 
 
     const [senha, setSenha] = useState(false);
@@ -200,13 +203,20 @@ export default function Signup({txtBtn}){
                     handleOnChange={handleChange}
                     customClass="checkedinput"
                 />
-                <label>Eu concordo com todos os <a href="#" className={style.termo}>Termos</a> e <a href="#"  className={style.termo}>Políticas de Privacidade</a></label>
+                <label className={style.termoConcorda}>Eu concordo com todos os 
+                    <a href="#" className={style.termo}>Termos</a> e 
+                    <a href="#"  className={style.termo}>Políticas de Privacidade</a>
+                </label>
             </div>
 
             
             <Submit text={txtBtn} customClass="btnCriaConta"/>
-            <p className={style.loginLink}>Já possui uma conta? <a href="#">Login</a></p>
 
+            <p className={style.loginLink}>Já possui uma conta? 
+                <span onClick={irParaLogin} className={style.loginClick}>
+                    Login   
+                </span>
+            </p>
             <div className={style.divider}>Ou faça login com</div>
 
             <div className={style.googleLogin}>

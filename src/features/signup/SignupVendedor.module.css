@@ -63,6 +63,32 @@
     border: 1px solid #79747E;
 }
 
+.divider {
+    text-align: center;
+    margin: 1em 0 1em;
+    font-size: 0.85rem;
+    color: #999;
+    position: relative;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    height: 1px;
+    background: #ddd;
+    position: absolute;
+    top: 50%;
+    width: 35%;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
 /* Usado para o label "Preferência de pagamento" */
 .labelPagamento {
     position: absolute;
@@ -127,6 +153,25 @@
     font: bold;
 }
 
+.googleBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: 500;
+    margin: 1rem 0;
+    width: 100%;
+  }
+  
+  .googleBtn:hover {
+    background-color: #f1f1f1;
+  }
+  
 
 
 

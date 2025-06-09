@@ -1,198 +1,215 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import style from "./Signin.module.css"
+import style from "./Signin.module.css";
 
-import Input from "../../components/form/input/Input"
-import Submit from "../../components/form/submit/Submit"
+import Input from "../../components/form/input/Input";
+import Submit from "../../components/form/submit/Submit";
 
-import { GoogleLogin } from '@react-oauth/google';
+import { auth } from "../../../firebase";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
+} from "firebase/auth";
+
+import { db } from "../../../firebase";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 /*icone de mostrar senha*/
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
+export default function Signin({ txtBtn }) {
+  const [dados, setDados] = useState({
+    email: "",
+    senha: "",
+    lembreDeMim: false,
+  });
+  const navigate = useNavigate();
+  //mudança de estado dos objetos
+  function handleChange(e) {
+    const { name, value, type, checked } = e.target;
+    setDados({
+      ...dados,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  }
 
+  const loginComGoogle = async () => {
+    const provider = new GoogleAuthProvider();
 
-export default function Signin({txtBtn}){
+    try {
+      await setPersistence(
+        auth,
+        dados.lembreDeMim ? browserLocalPersistence : browserSessionPersistence
+      );
+      const result = await signInWithPopup(auth, provider);
 
-    const [dados, setDados] = useState({ email:'', senha:'', lembreDeMim:false })
-    const navigate = useNavigate();
-    //mudança de estado dos objetos
-    function handleChange(e){
-        const {name, value, type, checked} = e.target;
-        setDados({
-            ...dados,
-            [name]: type === 'checkbox' ? checked : value
-        });
+      await salvarUsuarioNoFirestore(result.user);
+      navigate("/meusprodutos");
+    } catch (error) {
+      console.error("Erro no login com Google:", error);
+      alert("Erro ao autenticar com o Google.");
+    }
+  };
+
+  const salvarUsuarioNoFirestore = async (user) => {
+    if (!user) return;
+
+    const usuarioRef = doc(db, "usuarios", user.uid);
+    const usuarioSnap = await getDoc(usuarioRef);
+
+    if (!usuarioSnap.exists()) {
+      await setDoc(usuarioRef, {
+        nome: user.displayName || "",
+        email: user.email,
+        uid: user.uid,
+        criadoEm: new Date(),
+      });
+      console.log("Usuário salvo no Firestore.");
+    } else {
+      console.log("Usuário já existe no Firestore.");
+    }
+  };
+
+  const irParaBemvindo = () => {
+    navigate("/");
+  };
+
+  const [senha, setSenha] = useState(false);
+
+  // Validação básica das informações do usuario
+  function validarFormulario(dados) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (Object.values(dados).some((v) => v === "" || v === false)) {
+      return "Por favor, preencha todos os campos obrigatórios.";
     }
 
-    const irParaBemvindo = () => {
-        navigate('/');
-    };
-
-    const [senha, setSenha] = useState(false);
-
-    // Validação básica das informações do usuario
-    function validarFormulario(dados) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (Object.values(dados).some(v => v === '' || v === false)) {
-            return "Por favor, preencha todos os campos obrigatórios.";
-        }
-
-        if (!emailRegex.test(dados.email)) {
-            return "Por favor, insira um email válido.";
-        }
-        if (dados.senha.length < 6) {
-            return "A senha deve ter pelo menos 6 caracteres.";
-        }
-
-        return null;
+    if (!emailRegex.test(dados.email)) {
+      return "Por favor, insira um email válido.";
+    }
+    if (dados.senha.length < 6) {
+      return "A senha deve ter pelo menos 6 caracteres.";
     }
 
+    return null;
+  }
 
-    function submit(e){
+  const submit = async (e) => {
+    e.preventDefault();
 
-        e.preventDefault();
-        //console.log(dados)
-
-        // Verificação de campos obrigatórios
-        const erro = validarFormulario(dados);
-        if (erro) {
-            alert(erro);
-            return;
-        }
-        console.log(dados)
-        // Envia os dados para a API
-        /*
-        fetch('https://api',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dados)
-        })
-        .then(response =>{
-            if (!response.ok){
-                throw new Error('Erro ao cadastrar');
-            }
-            return response.json();
-        })
-        .then(data =>{
-            console.log("Cadastro realizado com sucesso:", data);
-            // Redirecionar ou exibir mensagem de sucesso
-            localStorage.setItem("token", data.token);
-            window.location.href = "/dashboard";
-            
-        })
-        .catch(error =>{
-            console.error("Erro no envio:", error);
-            alert("Ocorreu um erro ao cadastrar.");
-        });
-        */
+    const erro = validarFormulario(dados);
+    if (erro) {
+      alert(erro);
+      return;
     }
 
-    
-    //form de cadastro do cliente
-    return (
-        <form className={style.formCadastro} onSubmit={submit}>
-            <h2 className={style.titulo}>Login</h2>
+    try {
+      await setPersistence(
+        auth,
+        dados.lembreDeMim ? browserLocalPersistence : browserSessionPersistence
+      );
+      const result = await signInWithEmailAndPassword(
+        auth,
+        dados.email,
+        dados.senha
+      );
 
-            <div className={style.googleLogin}>
-                <GoogleLogin
-                    className={style.googlecomponent}
-                    onSuccess={credentialResponse => {
-                        const tokenId = credentialResponse.credential;
-                        console.log("Token de ID do Google:", tokenId);
+      await salvarUsuarioNoFirestore(result.user);
+      navigate("/meusprodutos");
+    } catch (error) {
+      console.error("Erro no login:", error);
+      alert("Erro ao fazer login.");
+    }
+  };
 
-                        // Integração com backend comentada por enquanto:
-                        /*
-                        fetch("https://sua-api.com/auth/google", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({ token: tokenId })
-                        })
-                        .then(res => res.json())
-                        .then(data => {
-                            console.log("Usuário autenticado com sucesso:", data);
-                            // Redirecionar ou salvar token local
-                        })
-                        .catch(err => {
-                            console.error("Erro no login com Google:", err);
-                            alert("Erro ao fazer login com Google");
-                        });
-                        */
-                    }}
-                    onError={() => {
-                        alert("Erro ao autenticar com o Google.");
-                    }}
-                />
-            </div>
+  //form de cadastro do cliente
+  return (
+    <form className={style.formCadastro} onSubmit={submit}>
+      <h2 className={style.titulo}>Login</h2>
 
-            <div className={style.divider}>Ou</div>
+      <div className={style.googleLogin}>
+        <div className={style.googleLogin}>
+          <button
+            type="button"
+            onClick={loginComGoogle}
+            className={style.googleBtn}
+          >
+            Entrar com Google
+          </button>
+        </div>
+      </div>
 
-            <div className={style.emailContainer}>
-                <label className={style.labelSenhaEmail}>Email</label>
-                <Input
-                type="email"
-                name="email"
-                placeholder="Digite seu email"
-                handleOnChange={handleChange}
-                value={dados.email}
-                customClass="loginEmail"
-            />
-            </div>
+      <div className={style.divider}>Ou</div>
 
-            {/* senha*/}
-            <div className={style.passwordWrapper}>
-                <label className={style.labelSenhaEmail}>Senha</label>
-                <Input
-                    type={senha ? 'text' : 'password'}
-                    name="senha"
-                    placeholder="Digite sua senha"
-                    handleOnChange={handleChange}
-                    value={dados.senha}
-                    customClass="loginSenha"
-                    
-                />
-                {/* Vizualizar senha*/}
-                <span
-                    className={style.vizuSenha}
-                    onClick={() => setSenha(!senha)}
-                    style={{ cursor: 'pointer' }}
-                >
-                    {senha ? <FaEyeSlash className={style.iconVizu} /> : <FaEye className={style.iconVizu}/>}
-                </span>
-            </div>
-    
-            <div className={style.senhaMain}>
-                <div className={style.checkboxContainer}>
-                    <Input 
-                        type="checkbox" 
-                        name="lembreDeMim" 
-                        id="lembreDeMim" 
-                        checked={dados.lembreDeMim} 
-                        handleOnChange={handleChange}
-                        customClass="checkboxLogin"
-                    />
+      <div className={style.emailContainer}>
+        <label className={style.labelSenhaEmail}>Email</label>
+        <Input
+          type="email"
+          name="email"
+          placeholder="Digite seu email"
+          handleOnChange={handleChange}
+          value={dados.email}
+          customClass="loginEmail"
+        />
+      </div>
 
-                    <label className={style.lembrar}>Lembrar de mim</label>
-                </div>
+      {/* senha*/}
+      <div className={style.passwordWrapper}>
+        <label className={style.labelSenhaEmail}>Senha</label>
+        <Input
+          type={senha ? "text" : "password"}
+          name="senha"
+          placeholder="Digite sua senha"
+          handleOnChange={handleChange}
+          value={dados.senha}
+          customClass="loginSenha"
+        />
+        {/* Vizualizar senha*/}
+        <span
+          className={style.vizuSenha}
+          onClick={() => setSenha(!senha)}
+          style={{ cursor: "pointer" }}
+        >
+          {senha ? (
+            <FaEyeSlash className={style.iconVizu} />
+          ) : (
+            <FaEye className={style.iconVizu} />
+          )}
+        </span>
+      </div>
 
-                <p className={style.esqueceuSenha}>
-                    <a href="#">Esqueceu a senha?</a>
-                </p>
-            </div>
+      <div className={style.senhaMain}>
+        <div className={style.checkboxContainer}>
+          <Input
+            type="checkbox"
+            name="lembreDeMim"
+            id="lembreDeMim"
+            checked={dados.lembreDeMim}
+            handleOnChange={handleChange}
+            customClass="checkboxLogin"
+          />
 
-            
-            <Submit text={txtBtn} customClass="btnLogin"/>
-            <p className={style.cadastrarLogin}>Sem conta?
-                 <span onClick={irParaBemvindo} className={style.cadastroConta}> Criar uma conta</span>
-            </p>
+          <label className={style.lembrar}>Lembrar de mim</label>
+        </div>
 
-            
-        </form>
-    )
+        <p className={style.esqueceuSenha}>
+          <a href="#">Esqueceu a senha?</a>
+        </p>
+      </div>
+
+      <Submit text={txtBtn} customClass="btnLogin" />
+      <p className={style.cadastrarLogin}>
+        Sem conta?
+        <span onClick={irParaBemvindo} className={style.cadastroConta}>
+          {" "}
+          Criar uma conta
+        </span>
+      </p>
+    </form>
+  );
 }

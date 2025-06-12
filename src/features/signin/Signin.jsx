@@ -1,44 +1,57 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import style from "./Signin.module.css";
 
+// Componentes
 import Input from "../../components/form/input/Input";
 import Submit from "../../components/form/submit/Submit";
 
-import { auth } from "../../../firebase";
+// Firebase (somente para Google login e estrutura)
+import { auth, db } from "../../../firebase";
 import {
   GoogleAuthProvider,
   signInWithPopup,
-  signInWithEmailAndPassword,
   setPersistence,
   browserLocalPersistence,
   browserSessionPersistence,
 } from "firebase/auth";
-
-import { db } from "../../../firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-
-/*icone de mostrar senha*/
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useToast } from "../../components/toast/ToastContext";
 
 export default function Signin({ txtBtn }) {
+  const navigate = useNavigate();
+  const { addToast } = useToast();
+
   const [dados, setDados] = useState({
     email: "",
     senha: "",
     lembreDeMim: false,
   });
-  const navigate = useNavigate();
-  //mudança de estado dos objetos
+
+  const [senhaVisivel, setSenhaVisivel] = useState(false);
+
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
-    setDados({
-      ...dados,
+    setDados((prev) => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : value,
-    });
+    }));
   }
 
-  const loginComGoogle = async () => {
+  function validarFormulario({ email, senha }) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !senha)
+      return "Por favor, preencha todos os campos obrigatórios.";
+    if (!emailRegex.test(email)) return "Por favor, insira um email válido.";
+    if (senha.length < 6) return "A senha deve ter pelo menos 6 caracteres.";
+
+    return null;
+  }
+
+  async function loginComGoogle() {
     const provider = new GoogleAuthProvider();
 
     try {
@@ -46,136 +59,117 @@ export default function Signin({ txtBtn }) {
         auth,
         dados.lembreDeMim ? browserLocalPersistence : browserSessionPersistence
       );
-      const result = await signInWithPopup(auth, provider);
 
+      const result = await signInWithPopup(auth, provider);
       await salvarUsuarioNoFirestore(result.user);
+
       navigate("/meusprodutos");
     } catch (error) {
       console.error("Erro no login com Google:", error);
-      alert("Erro ao autenticar com o Google.");
+      addToast({ tipo: "erro", mensagem: "Erro ao autenticar com o Google." });
     }
-  };
-
-  const salvarUsuarioNoFirestore = async (user) => {
-    if (!user) return;
-
-    const usuarioRef = doc(db, "usuarios", user.uid);
-    const usuarioSnap = await getDoc(usuarioRef);
-
-    if (!usuarioSnap.exists()) {
-      await setDoc(usuarioRef, {
-        nome: user.displayName || "",
-        email: user.email,
-        uid: user.uid,
-        criadoEm: new Date(),
-      });
-      console.log("Usuário salvo no Firestore.");
-    } else {
-      console.log("Usuário já existe no Firestore.");
-    }
-  };
-
-  const irParaBemvindo = () => {
-    navigate("/");
-  };
-
-  const [senha, setSenha] = useState(false);
-
-  // Validação básica das informações do usuario
-  function validarFormulario(dados) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (Object.values(dados).some((v) => v === "" || v === false)) {
-      return "Por favor, preencha todos os campos obrigatórios.";
-    }
-
-    if (!emailRegex.test(dados.email)) {
-      return "Por favor, insira um email válido.";
-    }
-    if (dados.senha.length < 6) {
-      return "A senha deve ter pelo menos 6 caracteres.";
-    }
-
-    return null;
   }
+
+  // FAKE DATABASE SIMULADA
+  const fakeUsers = [
+    {
+      uid: "uid-simulada-123",
+      email: "manuelavieira732@gmail.com",
+      senha: "Badu1234",
+      nome: "Usuário Simulado",
+      criadoEm: new Date(),
+    },
+  ];
 
   const submit = async (e) => {
     e.preventDefault();
 
     const erro = validarFormulario(dados);
     if (erro) {
-      alert(erro);
+      addToast({ tipo: "erro", mensagem: erro });
       return;
     }
 
-    try {
-      await setPersistence(
-        auth,
-        dados.lembreDeMim ? browserLocalPersistence : browserSessionPersistence
-      );
-      const result = await signInWithEmailAndPassword(
-        auth,
-        dados.email,
-        dados.senha
-      );
+    // Simular verificação de credenciais
+    const usuarioEncontrado = fakeUsers.find(
+      (user) =>
+        user.email === dados.email.trim().toLowerCase() &&
+        user.senha === dados.senha
+    );
 
-      await salvarUsuarioNoFirestore(result.user);
-      navigate("/meusprodutos");
-    } catch (error) {
-      console.error("Erro no login:", error);
-      alert("Erro ao fazer login.");
+    if (usuarioEncontrado) {
+      // Simular persistência (como browserLocalPersistence)
+      if (dados.lembreDeMim) {
+        localStorage.setItem("usuario", JSON.stringify(usuarioEncontrado));
+      } else {
+        sessionStorage.setItem("usuario", JSON.stringify(usuarioEncontrado));
+      }
+
+      addToast({ tipo: "sucesso", mensagem: "Login realizado com sucesso!" });
+
+      setTimeout(() => {
+        navigate("/meusprodutos");
+      }, 1000);
+    } else {
+      addToast({ tipo: "erro", mensagem: "Email ou senha inválidos." });
     }
   };
 
-  //form de cadastro do cliente
+  const irParaBemvindo = () => {
+    navigate("/bemvindo");
+  };
+
   return (
     <form className={style.formCadastro} onSubmit={submit}>
       <h2 className={style.titulo}>Login</h2>
 
-      <div className={style.googleLogin}>
-        <div className={style.googleLogin}>
-          <button
-            type="button"
-            onClick={loginComGoogle}
-            className={style.googleBtn}
-          >
-            Entrar com Google
-          </button>
-        </div>
-      </div>
+      {/* Login com Google */}
+      <button
+        type="button"
+        onClick={loginComGoogle}
+        className={style.googleBtn}
+      >
+        <img
+          src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+          alt="Google logo"
+          className={style.googleIcon}
+        />
+        <span className={style.googleText}>Entrar com Google</span>
+      </button>
 
       <div className={style.divider}>Ou</div>
 
+      {/* Campo de email */}
       <div className={style.emailContainer}>
         <label className={style.labelSenhaEmail}>Email</label>
         <Input
           type="email"
           name="email"
           placeholder="Digite seu email"
-          handleOnChange={handleChange}
           value={dados.email}
+          handleOnChange={handleChange}
           customClass="loginEmail"
         />
       </div>
 
-      {/* senha*/}
+      {/* Campo de senha */}
       <div className={style.passwordWrapper}>
         <label className={style.labelSenhaEmail}>Senha</label>
         <Input
-          type={senha ? "text" : "password"}
+          type={senhaVisivel ? "text" : "password"}
           name="senha"
           placeholder="Digite sua senha"
-          handleOnChange={handleChange}
           value={dados.senha}
+          handleOnChange={handleChange}
           customClass="loginSenha"
         />
-        {/* Vizualizar senha*/}
+
         <span
           className={style.vizuSenha}
-          onClick={() => setSenha(!senha)}
+          onClick={() => setSenhaVisivel(!senhaVisivel)}
           style={{ cursor: "pointer" }}
         >
-          {senha ? (
+          {senhaVisivel ? (
             <FaEyeSlash className={style.iconVizu} />
           ) : (
             <FaEye className={style.iconVizu} />
@@ -193,7 +187,6 @@ export default function Signin({ txtBtn }) {
             handleOnChange={handleChange}
             customClass="checkboxLogin"
           />
-
           <label className={style.lembrar}>Lembrar de mim</label>
         </div>
 
@@ -203,6 +196,7 @@ export default function Signin({ txtBtn }) {
       </div>
 
       <Submit text={txtBtn} customClass="btnLogin" />
+
       <p className={style.cadastrarLogin}>
         Sem conta?
         <span onClick={irParaBemvindo} className={style.cadastroConta}>

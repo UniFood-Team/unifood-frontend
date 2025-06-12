@@ -8,15 +8,16 @@ import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 
 import { PrimeReactProvider } from "primereact/api";
-import Toast from "./components/toast/Toast";
+
 import { ToastProvider } from "./components/toast/ToastContext";
+import ToastContainer from "./components/toast/ToastContainer";
 
 function App() {
   return (
     <PrimeReactProvider>
       <ToastProvider>
+        <ToastContainer />
         <AppRoutes />
-        <Toast />
       </ToastProvider>
     </PrimeReactProvider>
   );

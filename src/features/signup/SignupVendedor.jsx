@@ -274,12 +274,18 @@ export default function Signup({ txtBtn }) {
 
       <div className={style.divider}>Ou faça login com</div>
 
+      {/* Login com Google */}
       <button
         type="button"
-        onClick={handleGoogleSignup}
+        onClick={loginComGoogle}
         className={style.googleBtn}
       >
-        <FcGoogle size={20} /> Entrar com Google
+        <img
+          src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+          alt="Google logo"
+          className={style.googleIcon}
+        />
+        <span className={style.googleText}>Entrar com Google</span>
       </button>
     </form>
   );

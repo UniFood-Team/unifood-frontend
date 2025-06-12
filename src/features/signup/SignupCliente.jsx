@@ -12,6 +12,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { auth, db } from "../../../firebase";
 import { useToast } from "../../components/toast/ToastContext";
+import { useNavigate } from "react-router-dom"; // adicione se ainda não tiver
 
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
@@ -74,20 +75,29 @@ export default function Signup({ txtBtn }) {
     return null;
   }
 
+  const navigate = useNavigate();
+
   function submit(e) {
     e.preventDefault();
 
     const erro = validarFormulario(dados);
     if (erro) {
-      addToast({ tipo: "erro", mensagem: erro }); // ✅ substitui o alerta
+      addToast({ tipo: "erro", mensagem: erro });
       return;
     }
 
-    console.log("Dados validados:", dados);
+    // 🔐 Aqui você pode simular salvar no Firestore se quiser...
+
+    // ✅ Simula cadastro bem-sucedido
     addToast({
       tipo: "sucesso",
-      mensagem: "Cadastro validado com sucesso!",
+      mensagem: "Cadastro realizado com sucesso!",
     });
+
+    // Espera 1s e redireciona para login
+    setTimeout(() => {
+      navigate("/login");
+    }, 1000);
   }
 
   const loginComGoogle = async () => {

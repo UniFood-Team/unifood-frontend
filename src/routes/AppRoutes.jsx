@@ -14,6 +14,8 @@ import Mensagens from "../pages/Mensagens/Mensagens";
 import Recompensas from "../pages/Recompensas/Recompensas";
 import Configuracoes from "../pages/Configuracoes/Configuracoes";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import Pedidos from "../pages/Pedidos/Pedidos";
+import ProximosEventos from "../pages/Eventos/ProximosEventos";
 
 export default function AppRoutes() {
   console.log("Rotas renderizadas"); // Adicione isso
@@ -28,6 +30,8 @@ export default function AppRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/meusprodutos" element={<MeusProdutos />} />
         <Route path="/comidas" element={<Comidas />} />
+        <Route path="/pedidos" element={<Pedidos />} />
+        <Route path="/eventos" element={<ProximosEventos />} />
 
         <Route path="/pagamento" element={<Pagamento />} />
 

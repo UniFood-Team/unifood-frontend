@@ -1,78 +1,113 @@
 // ChatMensagens.jsx
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import NavBarraTop from "../../components/layout/navBarraTop/NavBarraTop";
 import NavBarraSide from "../../components/layout/navBarraSide/NavBarraSide";
 import styles from "./Mensagens.module.css";
 
+const mockConversations = [
+  { id: 1, name: "João Cliente", online: true },
+  { id: 2, name: "Maria Cliente", online: false },
+  { id: 3, name: "Carlos Cliente", online: true },
+];
+
 export default function ChatMensagens() {
+  const [selectedConv, setSelectedConv] = useState(mockConversations[0]);
   const [mensagens, setMensagens] = useState([
-    {
-      autor: "cliente",
-      texto: "Oi! Vocês têm bolo de cenoura hoje?",
-      hora: "14:02",
-    },
-    {
-      autor: "vendedor",
-      texto: "Olá! Sim, temos bolo de cenoura fresquinho 😊",
-      hora: "14:03",
-    },
+    { autor: "cliente", texto: "Olá, tem bolo ainda?" },
+    { autor: "vendedor", texto: "Oi! Tenho sim, quer reservar?" },
   ]);
-  const [novaMensagem, setNovaMensagem] = useState("");
+  const [input, setInput] = useState("");
+  const [typing, setTyping] = useState(false);
+  const mensagensRef = useRef(null);
 
-  const enviarMensagem = () => {
-    if (novaMensagem.trim() === "") return;
-    const nova = {
-      autor: "cliente",
-      texto: novaMensagem,
-      hora: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    };
-    setMensagens([...mensagens, nova]);
-    setNovaMensagem("");
-  };
+  useEffect(() => {
+    mensagensRef.current?.scrollTo({
+      top: mensagensRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [mensagens]);
 
-  const lidarComTecla = (e) => {
-    if (e.key === "Enter") enviarMensagem();
+  const handleSend = () => {
+    if (!input.trim()) return;
+    const novaMsg = { autor: "vendedor", texto: input };
+    setMensagens([...mensagens, novaMsg]);
+    setInput("");
+    setTyping(true);
+    setTimeout(() => {
+      setMensagens((prev) => [
+        ...prev,
+        { autor: "cliente", texto: "Perfeito, quero 2!" },
+      ]);
+      setTyping(false);
+    }, 1500);
   };
 
   return (
-    <div className={styles.containerChat}>
+    <div className={styles.containerGeral}>
       <NavBarraSide />
-      <div className={styles.mainContent}>
+      <div className={styles.containerChatPrincipal}>
         <NavBarraTop />
-        <main className={styles.chatContainer}>
-          <div className={styles.chatHeader}>Conversa com Vendedor</div>
+        <div className={styles.chatWrapper}>
+          <aside className={styles.sidebarConversas}>
+            <h3>Conversas</h3>
+            <ul>
+              {mockConversations.map((conv) => (
+                <li
+                  key={conv.id}
+                  className={
+                    selectedConv.id === conv.id
+                      ? styles.conversaAtiva
+                      : styles.conversa
+                  }
+                  onClick={() => setSelectedConv(conv)}
+                >
+                  <span>{conv.name}</span>
+                  <span
+                    className={
+                      conv.online ? styles.statusOnline : styles.statusOffline
+                    }
+                  ></span>
+                </li>
+              ))}
+            </ul>
+          </aside>
 
-          <div className={styles.historicoMensagens}>
-            {mensagens.map((msg, i) => (
-              <div
-                key={i}
-                className={`${styles.mensagem} ${
-                  msg.autor === "cliente" ? styles.cliente : styles.vendedor
-                }`}
-              >
-                <div className={styles.balao}>{msg.texto}</div>
-                <span className={styles.hora}>{msg.hora}</span>
-              </div>
-            ))}
-          </div>
+          <section className={styles.areaMensagens}>
+            <div className={styles.topoConversa}>
+              <strong>{selectedConv.name}</strong>
+            </div>
+            <div className={styles.historicoMensagens} ref={mensagensRef}>
+              {mensagens.map((msg, i) => (
+                <div
+                  key={i}
+                  className={
+                    msg.autor === "vendedor"
+                      ? styles.mensagemEnviada
+                      : styles.mensagemRecebida
+                  }
+                >
+                  <p>{msg.texto}</p>
+                </div>
+              ))}
+              {typing && (
+                <div className={styles.mensagemRecebida}>
+                  <p>Digitando...</p>
+                </div>
+              )}
+            </div>
 
-          <div className={styles.areaInput}>
-            <input
-              type="text"
-              value={novaMensagem}
-              onChange={(e) => setNovaMensagem(e.target.value)}
-              onKeyDown={lidarComTecla}
-              placeholder="Digite sua mensagem..."
-              className={styles.inputMensagem}
-            />
-            <button onClick={enviarMensagem} className={styles.botaoEnviar}>
-              Enviar
-            </button>
-          </div>
-        </main>
+            <div className={styles.areaInput}>
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Digite sua mensagem..."
+                onKeyDown={(e) => e.key === "Enter" && handleSend()}
+              />
+              <button onClick={handleSend}>Enviar</button>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   );

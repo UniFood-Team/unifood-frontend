@@ -130,27 +130,35 @@
     right: 0;
 }
 
-.googleLogin {
+.googleBtn {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    gap: 12px;
     width: 100%;
-    border-radius: 3px;
-    background-color: white;
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff;
+    font-weight: 500;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.googleLogin:hover {
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  .googleBtn:hover {
     background-color: #f5f5f5;
-}
-.googlecomponent{
-    width: 100%;
-}
-
-.googlecomponent:hover {
-    background-color: #f5f5f5;
-}
+  }
+  
+  .googleIcon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .googleText {
+    color: #555;
+  }
 
 
 

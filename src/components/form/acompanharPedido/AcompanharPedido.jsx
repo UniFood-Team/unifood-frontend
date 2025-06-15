@@ -22,7 +22,9 @@ export default function ModalAcompanhamentoPedido({ status = 0, onClose }) {
           </button>
         </div>
 
-        <a className={styles.viewDetails}>Ver detalhes</a>
+        <a href="/detalhesPedido" className={styles.viewDetails}>
+          Ver detalhes
+        </a>
 
         <div className={styles.steps}>
           {etapas.map((etapa, index) => (

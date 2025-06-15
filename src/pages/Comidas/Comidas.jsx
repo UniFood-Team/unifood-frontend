@@ -6,6 +6,7 @@ import { FaFilter } from "react-icons/fa";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
+import VisualizarProduto from "../../components/form/visualizarProduto/VisualizarProduto";
 
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -161,50 +162,13 @@ export default function Comidas() {
             ))}
           </div>
 
-          <Dialog
-            header={produtoSelecionado?.nome}
-            visible={!!produtoSelecionado}
-            onHide={() => setProdutoSelecionado(null)}
-            style={{ width: "400px" }}
-            footer={
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Button
-                  label="Adicionar ao Carrinho"
-                  icon="pi pi-shopping-cart"
-                  onClick={() => adicionarAoCarrinho(produtoSelecionado)}
-                />
-                <Button
-                  label="Comprar agora"
-                  onClick={() => handleComprarAgora(produtoSelecionado)}
-                  className="p-button-success"
-                />
-              </div>
-            }
-          >
-            {produtoSelecionado && (
-              <>
-                <img
-                  src={produtoSelecionado.imagemUrl}
-                  alt={produtoSelecionado.nome}
-                  style={{
-                    width: "100%",
-                    borderRadius: "8px",
-                    marginBottom: "1rem",
-                  }}
-                />
-                <p>
-                  <strong>Loja:</strong> {produtoSelecionado.loja}
-                </p>
-                <p>
-                  <strong>Categoria:</strong> {produtoSelecionado.categoria}
-                </p>
-                <p>{produtoSelecionado.descricao}</p>
-                <p>
-                  <strong>Preço:</strong> R${produtoSelecionado.preco}
-                </p>
-              </>
-            )}
-          </Dialog>
+          <VisualizarProduto
+            produto={produtoSelecionado}
+            aberto={!!produtoSelecionado}
+            aoFechar={() => setProdutoSelecionado(null)}
+            adicionarAoCarrinho={adicionarAoCarrinho}
+            comprarAgora={handleComprarAgora}
+          />
         </div>
       </div>
     </div>

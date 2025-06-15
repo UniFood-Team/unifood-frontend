@@ -10,6 +10,8 @@ import styles from "./Pedidos.module.css";
 export default function PaginaPedidos() {
   const [modalOpen, setModalOpen] = useState(false);
   const [pedidoSelecionado, setPedidoSelecionado] = useState(null);
+  const [filtroBusca, setFiltroBusca] = useState("");
+  const [filtroStatus, setFiltroStatus] = useState("Todos");
 
   const pedidos = [
     {
@@ -38,6 +40,15 @@ export default function PaginaPedidos() {
   };
   const fecharModal = () => setModalOpen(false);
 
+  const pedidosFiltrados = pedidos.filter((pedido) => {
+    const buscaMatch =
+      pedido.cliente.toLowerCase().includes(filtroBusca.toLowerCase()) ||
+      pedido.produtos.toLowerCase().includes(filtroBusca.toLowerCase());
+    const statusMatch =
+      filtroStatus === "Todos" || pedido.status === filtroStatus;
+    return buscaMatch && statusMatch;
+  });
+
   return (
     <div className={styles.container}>
       <NavBarraSide />
@@ -45,6 +56,28 @@ export default function PaginaPedidos() {
         <NavBarraTop />
         <main className={styles.content}>
           <h2 className={styles.title}>Histórico de pedidos</h2>
+
+          <div className={styles.filtrosWrapper}>
+            <input
+              type="text"
+              placeholder="Buscar por cliente ou produto..."
+              value={filtroBusca}
+              onChange={(e) => setFiltroBusca(e.target.value)}
+              className={styles.inputBusca}
+            />
+
+            <select
+              value={filtroStatus}
+              onChange={(e) => setFiltroStatus(e.target.value)}
+              className={styles.selectStatus}
+            >
+              <option value="Todos">Todos</option>
+              <option value="Pendente">Pendentes</option>
+              <option value="Entregue">Entregues</option>
+              <option value="Cancelado">Cancelados</option>
+            </select>
+          </div>
+
           <div className={styles.tableWrapper}>
             <table className={styles.table}>
               <thead>
@@ -59,7 +92,7 @@ export default function PaginaPedidos() {
                 </tr>
               </thead>
               <tbody>
-                {pedidos.map((pedido) => (
+                {pedidosFiltrados.map((pedido) => (
                   <tr key={pedido.id}>
                     <td>{pedido.id}</td>
                     <td>{pedido.cliente}</td>
@@ -71,7 +104,9 @@ export default function PaginaPedidos() {
                         className={`${styles.status} ${
                           pedido.status === "Pendente"
                             ? styles.pendente
-                            : styles.entregue
+                            : pedido.status === "Entregue"
+                            ? styles.entregue
+                            : styles.cancelado
                         }`}
                       >
                         {pedido.status}

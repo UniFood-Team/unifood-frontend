@@ -296,3 +296,32 @@
   }
 
 }
+
+.dropzone {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  color: #666;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.dropzone:hover {
+  background-color: #f0f0f0;
+}
+
+.dropzone.ativo {
+  background-color: #e0ffe0;
+  border-color: #00c853;
+  color: #00c853;
+}
+
+.previewImagem img {
+  margin-top: 10px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
